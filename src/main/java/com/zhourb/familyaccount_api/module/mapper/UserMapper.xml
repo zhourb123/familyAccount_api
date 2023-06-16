@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhourb.familyaccount_api.module.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zhourb.familyaccount_api.module.Entity.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usernick" jdbcType="VARCHAR" property="usernick"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="enabled"  jdbcType="BIT" property="enabled"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.zhourb.familyaccount_api.module.Entity.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usernick" jdbcType="VARCHAR" property="usernick"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="enabled" jdbcType="BIT" property="enabled"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <collection property="roleList" ofType="com.zhourb.familyaccount_api.module.Entity.Role">
+            <result column="roleId" jdbcType="INTEGER" property="id"/>
+            <result column="roleName" jdbcType="VARCHAR" property="roleName"/>
+        </collection>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, username, usernick, birthday, phone, address, password, enabled, create_time, creator, update_time,sex,avatar
+    </sql>
+    <sql id="Base_Column_List2">
+        u.id AS id , u.username  AS username, u.usernick AS usernick,u.birthday AS birthday,u.phone AS phone,u.address AS address
+        , u.password  AS password, u.enabled  AS enabled, u.create_time  AS create_time, u.creator  AS creator, u.update_time  AS update_time ,u.sex AS sex
+        ,r.id AS roleId,r.name AS roleName
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fam_sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from fam_sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective" parameterType="com.zhourb.familyaccount_api.module.Entity.User"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into fam_sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="usernick != null and usernick != ''">
+                usernick,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="password != null and password != ''">
+                password,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="createtime != null">
+                create_time,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="updatetime != null">
+                update_time,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null and username != ''">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="usernick != null and usernick != ''">
+                #{usernick,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.zhourb.familyaccount_api.module.Entity.User">
+        update fam_sys_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="usernick != null">
+                usernick = #{usernick,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="updatetime != null">
+                update_time = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByUsername" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fam_sys_user where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectAllUsers" resultType="com.zhourb.familyaccount_api.module.Entity.User"
+            resultMap="BaseResultMap">
+        select *
+        from fam_sys_user
+        <where>
+            <if test="usernick != null and usernick != ''" >
+                and usernick like concat("%",#{usernick},"%")
+            </if>
+            <if test="username != null and username != ''">
+                and username like concat("%",#{username},"%")
+            </if>
+            <if test="enabled != null">
+                and enabled = #{enabled}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>
